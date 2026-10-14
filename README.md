@@ -1,12 +1,12 @@
-# coding-itv-py
+# coding-itv-py-svc
 
-A skeleton project for software engineer coding interviews, Python version. It is a small monorepo with a working FastAPI backend, a Python CLI, a Next.js frontend, and end-to-end tests. Use it as a starting point: read the code, run the checks, and then add the feature or fix the interview asks for.
+A skeleton project for software engineer coding interviews focused on Python services. It is a small monorepo with a working FastAPI backend, a Python CLI, a Next.js frontend, and end-to-end tests. Use it as a starting point: read the code, run the checks, and then build or fix the service feature the interview asks for.
 
 ## What is inside
 
 | App                  | Stack                            | Purpose                                                         |
 | -------------------- | -------------------------------- | --------------------------------------------------------------- |
-| `apps/super-be`      | FastAPI, Python 3.13+, uv        | Python backend. This is the main area for the Python interview. |
+| `apps/super-be`      | FastAPI, Python 3.13+, uv        | Python service backend. This is the main area for the interview. |
 | `apps/super-cli`     | Typer, Python 3.13+, uv          | Command-line tool for the same project.                         |
 | `apps/super-web`     | Next.js (App Router), TypeScript | Web frontend.                                                   |
 | `apps/super-web-e2e` | Playwright                       | End-to-end tests against the running web app.                   |
