@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository.
 
 ## Project
 
-`coding-itv-py` is a monorepo with four apps in `apps/`: `super-web` (Next.js), `super-be` (FastAPI), `super-cli` (Typer CLI), and `super-web-e2e` (Playwright). Shared tooling and rules are at the root.
+`coding-itv-py` is a monorepo with three apps in `apps/`: `super-web` (Next.js), `super-be` (FastAPI), and `super-web-e2e` (Playwright). Shared tooling and rules are at the root.
 
 ## Repository setup
 
@@ -16,20 +16,19 @@ Guidance for AI coding agents working in this repository.
 - The repo is an Nx workspace using npm workspaces (`packages/*`). `nx.json` is the workspace config. `apps/` and `libs/` are at the root.
 - Do not install or use Nx plugins (`@nx/*`, `nx-*` packages, or plugin entries in `nx.json`). Define every target in a `project.json` with `"executor": "nx:run-commands"` and a `command` option. Do not use `nx init`, which can add plugins.
 - Every app in `apps/` has a `project.json` with the same target set. Run targets with `npx nx <target> <app>`, for example `npx nx test:quick super-be`.
-  - `typecheck`: `tsc --noEmit` for TypeScript apps, `pyright` for `super-be` and `super-cli`.
-  - `lint`: ESLint for TypeScript, `ruff check` for `super-be` and `super-cli`.
-  - `test:unit` and `test:unit:watch`: Vitest for `super-web`, pytest and pytest-watcher for `super-be` and `super-cli`.
+  - `typecheck`: `tsc --noEmit` for TypeScript apps, `pyright` for `super-be`.
+  - `lint`: ESLint for TypeScript, `ruff check` for `super-be`.
+  - `test:unit` and `test:unit:watch`: Vitest for `super-web`, pytest and pytest-watcher for `super-be`.
   - `test:e2e` and `test:e2e:watch`: Playwright, for `super-web-e2e` only.
   - `dev`: starts the dev server, for `super-web` and `super-be` only.
-  - `start`: runs the production server. For `super-web` it runs `next start` after `build`. For `super-be` it runs uvicorn without reload, and it has no build step. For `super-cli` it runs the CLI module (`python -m super_cli.main`); pass commands after `--`, for example `npx nx start super-cli -- health`.
-  - Extra targets: `build` (`super-web` only) and `format` (`super-be` and `super-cli`, `ruff format --check`).
+  - `start`: runs the production server. For `super-web` it runs `next start` after `build`. For `super-be` it runs uvicorn without reload, and it has no build step.
+  - Extra targets: `build` (`super-web` only) and `format` (`super-be`, `ruff format --check`).
   - `test:quick`: runs the same app's `typecheck`, `lint`, and `test:unit` targets, in that order, through `npx nx <target> <app>`. Change a check in its own target, not in `test:quick`. `super-web-e2e` has no `test:unit`, so its `test:quick` runs `typecheck` and `lint`.
-- The pre-commit hook also runs `ruff format` on staged Python files in `apps/super-be` and `apps/super-cli` (configured under `lint-staged` in `package.json`). It formats only; it does not run `ruff check`.
+- The pre-commit hook also runs `ruff format` on staged Python files in `apps/super-be` (configured under `lint-staged` in `package.json`). It formats only; it does not run `ruff check`.
 - `.husky/pre-push` runs `npx nx affected -t test:quick`, so a push runs `test:quick` only for projects changed since `main` (`defaultBase` in `nx.json`). Do not skip it with `--no-verify` unless the user asks.
 - TypeScript apps must reject implicit `any`. Keep `noImplicitAny: true` set explicitly in each `tsconfig.json`.
 - `apps/super-web` is a Next.js App Router app in TypeScript. Unit tests use Vitest with jsdom and Testing Library, in `*_tests.tsx` files next to the code (see Tests below). Vitest globals are off, so call `cleanup` in `afterEach` when rendering components. It has its own `package.json` and lock file, and it is not an npm workspace. Keep `typescript` on 5.x: `typescript-eslint` does not support TypeScript 7 yet, and `lint` fails with it. Keep `@types/node` on 24 to match the Node pin.
 - `apps/super-be` is a FastAPI app in Python 3.13+, managed with uv. Its package is `super_be/`, and its tests sit next to the source as `*_tests.py` (see Tests below). Ruff and pyright are configured in `pyproject.toml`. Run `uv run ruff format .` to fix formatting. Commit `uv.lock`.
-- `apps/super-cli` is a Typer CLI in Python 3.13+, managed with uv. It has the same layout and tooling as `super-be`, but it is not a server, so it has no `dev` or `build` target. Its only command so far is `health`, which prints the same status as `super-be`'s `GET /health`. Typer needs the callback in `main.py`, so the app stays a command group when more commands are added.
 - `apps/super-web-e2e` has Playwright tests in `tests/`. The Playwright config builds and starts `super-web` on port 3000 if it isn't already running, waits for `/api/health` to return, and then runs the tests against the production build.
 
 ## Tests

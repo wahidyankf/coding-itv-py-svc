@@ -27,8 +27,7 @@
   },
   "lint-staged": {
     "*.{js,cjs,mjs,json,md,yml,yaml}": "prettier --write",
-    "apps/super-be/**/*.py": "uv run --project apps/super-be ruff format",
-    "apps/super-cli/**/*.py": "uv run --project apps/super-cli ruff format"
+    "apps/super-be/**/*.py": "uv run --project apps/super-be ruff format"
   },
   "volta": {
     "node": "24.21.0"
