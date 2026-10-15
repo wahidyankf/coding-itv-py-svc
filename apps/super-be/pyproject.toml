@@ -3,7 +3,10 @@ name = "super-be"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
+    "alembic>=1.20.0",
     "fastapi>=0.143.0",
+    "psycopg[binary]>=3.3.6",
+    "sqlalchemy>=2.1.4",
     "uvicorn>=0.54.0",
 ]
 
@@ -21,6 +24,7 @@ testpaths = ["super_be"]
 python_files = ["*_tests.py"]
 addopts = "--ignore-glob=*_production_tests.py"
 pythonpath = ["."]
+markers = ["integration: needs the Postgres container from compose.yaml"]
 
 [tool.ruff]
 line-length = 88

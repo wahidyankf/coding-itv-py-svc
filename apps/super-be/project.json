@@ -42,7 +42,42 @@
     "test:unit": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "uv run pytest",
+        "command": "uv run pytest -m \"not integration\"",
+        "cwd": "apps/super-be"
+      }
+    },
+    "test:integration": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "uv run pytest -m integration",
+        "cwd": "apps/super-be"
+      }
+    },
+    "db:up": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose up -d --wait",
+        "cwd": "."
+      }
+    },
+    "db:down": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose down",
+        "cwd": "."
+      }
+    },
+    "db:reset": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "docker compose -f ../../compose.yaml down -v && docker compose -f ../../compose.yaml up -d --wait && uv run alembic upgrade head",
+        "cwd": "apps/super-be"
+      }
+    },
+    "db:migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "uv run alembic upgrade head",
         "cwd": "apps/super-be"
       }
     },

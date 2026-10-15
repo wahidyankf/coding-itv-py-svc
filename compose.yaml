@@ -1,0 +1,22 @@
+# Local Postgres for super-be. Start it with `npx nx db:up super-be`.
+# The defaults match DEFAULT_DATABASE_URL in apps/super-be/super_be/config.py.
+# Set the variables in a root .env file to change them. Do not use these values outside local development.
+services:
+  postgres:
+    image: postgres:18
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-super_be}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-super_be}
+      POSTGRES_DB: ${POSTGRES_DB:-super_be}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  postgres-data:

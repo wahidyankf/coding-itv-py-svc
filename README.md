@@ -35,7 +35,11 @@ Run a target for one app with `npx nx <target> <app>`:
 ```sh
 npx nx dev super-be             # backend with reload at http://localhost:8000
 npx nx dev super-web            # frontend at http://localhost:3000
-npx nx test:unit super-be       # pytest
+npx nx db:up super-be           # start Postgres with Docker Compose
+npx nx db:migrate super-be      # apply database migrations
+npx nx db:reset super-be        # delete all database data, then start and migrate again
+npx nx test:unit super-be       # pytest, without the database
+npx nx test:integration super-be # pytest against Postgres (run db:up and db:migrate first)
 npx nx test:quick super-be      # typecheck + lint + unit tests
 npx nx test:e2e super-web-e2e   # Playwright (starts the web app for you)
 ```
