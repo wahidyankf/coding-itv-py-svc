@@ -14,7 +14,7 @@ The apps are managed with [Nx](https://nx.dev). Nx only runs commands; no Nx plu
 
 ## Prerequisites
 
-- [Volta](https://volta.sh), which installs the pinned Node.js version (24.21.0) for this repo.
+- [Volta](https://volta.sh), which installs the pinned Node.js version (24.22.0) for this repo.
 - [uv](https://docs.astral.sh/uv/), which manages Python and the `super-be` dependencies.
 - Git.
 
@@ -43,7 +43,7 @@ npx nx test:e2e super-web-e2e   # Playwright (starts the web app for you)
 Other targets:
 
 - `typecheck`: `pyright` for `super-be`, `tsc --noEmit` for the TypeScript apps.
-- `lint`: `ruff check` for `super-be`, ESLint for the TypeScript apps.
+- `lint`: `ruff check` for `super-be`, Biome for the TypeScript apps. Biome config is in the root `biome.json`.
 - `format`: `ruff format --check` for `super-be`. Run `uv run ruff format .` inside `apps/super-be` to fix formatting.
 - `test:unit:watch`, `test:e2e:watch`: rerun tests on change.
 - `start`: run the production server. `super-web` builds first.

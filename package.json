@@ -12,13 +12,14 @@
   "license": "ISC",
   "type": "commonjs",
   "engines": {
-    "node": ">=24.21.0"
+    "node": ">=24.22.0"
   },
   "workspaces": [
     "apps/super-web",
     "apps/super-web-e2e"
   ],
   "devDependencies": {
+    "@biomejs/biome": "^2.5.15",
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
     "husky": "^9.1.7",
@@ -31,6 +32,11 @@
     "apps/super-be/**/*.py": "uv run --project apps/super-be ruff format"
   },
   "volta": {
-    "node": "24.21.0"
+    "node": "24.22.0"
+  },
+  "allowScripts": {
+    "nx@23.3.0": true,
+    "unrs-resolver@1.12.2": true,
+    "fsevents@2.3.3": true
   }
 }

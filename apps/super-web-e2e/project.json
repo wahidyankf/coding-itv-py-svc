@@ -15,7 +15,7 @@
     "lint": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx eslint .",
+        "command": "npx biome lint .",
         "cwd": "apps/super-web-e2e"
       }
     },
