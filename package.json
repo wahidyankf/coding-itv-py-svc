@@ -15,7 +15,8 @@
     "node": ">=24.21.0"
   },
   "workspaces": [
-    "packages/*"
+    "apps/super-web",
+    "apps/super-web-e2e"
   ],
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",

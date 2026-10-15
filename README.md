@@ -21,14 +21,11 @@ The apps are managed with [Nx](https://nx.dev). Nx only runs commands; no Nx plu
 ## Getting started
 
 ```sh
-# Install the root tooling and Git hooks
+# Install the root tooling, Git hooks, and the frontend and e2e dependencies (npm workspaces)
 npm install
 
 # Install the backend dependencies
 cd apps/super-be && uv sync && cd ../..
-
-# Install the frontend and e2e dependencies
-(cd apps/super-web && npm install) && (cd apps/super-web-e2e && npm install)
 ```
 
 ## Common commands

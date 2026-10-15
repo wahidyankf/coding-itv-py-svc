@@ -1,1 +1,1 @@
-npx nx affected -t test:quick
+npx nx affected -t test:quick --base=origin/main
