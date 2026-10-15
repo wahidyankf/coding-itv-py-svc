@@ -1,0 +1,8 @@
+@backend = http://localhost:8000
+@web = http://localhost:3000
+
+### Backend: health check (FastAPI, run with `npx nx dev super-be`)
+GET {{backend}}/health
+
+### Web: health check (Next.js route, run with `npx nx dev super-web`)
+GET {{web}}/api/health

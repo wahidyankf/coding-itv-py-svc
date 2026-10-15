@@ -46,9 +46,17 @@ Other targets:
 - `lint`: `ruff check` for `super-be`, Biome for the TypeScript apps. Biome config is in the root `biome.json`.
 - `format`: `ruff format --check` for `super-be`. Run `uv run ruff format .` inside `apps/super-be` to fix formatting.
 - `test:unit:watch`, `test:e2e:watch`: rerun tests on change.
+- `test:quick:watch`: rerun `typecheck`, `lint`, and unit tests on each change, and show the errors in the terminal.
 - `start`: run the production server. `super-web` builds first.
 
 The backend health check is `GET /health`, and the web app's is `GET /api/health`.
+
+## Manual API checks
+
+[`api.http`](api.http) lists requests for the running apps. Open it in an editor with the kulala.nvim plugin, or use any
+client that reads `.http` files. Start the app first, then send a request. In Neovim, put the cursor on a request and press `,rh`.
+
+Add a new request as its own `###` block. Keep the host in a variable at the top of the file. This file is for manual checks only. Automated checks go in `*_tests.*` files.
 
 ## Layout
 

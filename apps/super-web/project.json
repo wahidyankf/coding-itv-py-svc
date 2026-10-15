@@ -66,6 +66,13 @@
         "cwd": ".",
         "parallel": false
       }
+    },
+    "test:quick:watch": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npx nx watch --projects=super-web --initialRun -- npx nx run-many -t typecheck lint test:unit -p super-web --output-style=stream",
+        "cwd": "."
+      }
     }
   }
 }

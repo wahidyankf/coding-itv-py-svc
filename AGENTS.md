@@ -23,12 +23,14 @@ Guidance for AI coding agents working in this repository.
   - `dev`: starts the dev server, for `super-web` and `super-be` only.
   - `start`: runs the production server. For `super-web` it runs `next start` after `build`. For `super-be` it runs uvicorn without reload, and it has no build step.
   - Extra targets: `build` (`super-web` only) and `format` (`super-be`, `ruff format --check`).
+  - `test:quick:watch`: runs `nx watch` on the app and reruns its quick checks on each file change. It uses `nx run-many` instead of `test:quick`, so the output of failed checks shows in the terminal. The check list is repeated on purpose, so keep it in sync with `test:quick`.
   - `test:quick`: runs the same app's `typecheck`, `lint`, and `test:unit` targets, in that order, through `npx nx <target> <app>`. Change a check in its own target, not in `test:quick`. `super-web-e2e` has no `test:unit`, so its `test:quick` runs `typecheck` and `lint`.
 - The pre-commit hook also runs `ruff format` on staged Python files in `apps/super-be` (configured under `lint-staged` in `package.json`). It formats only; it does not run `ruff check`.
 - `.husky/pre-push` runs `npx nx affected -t test:quick --base=origin/main`, so a push runs `test:quick` only for projects changed since the last state on `origin/main`. Local `main` is not used as the base, because it already includes the commits being pushed. Do not skip it with `--no-verify` unless the user asks.
 - TypeScript apps must reject implicit `any`. Keep `noImplicitAny: true` set explicitly in each `tsconfig.json`.
 - `apps/super-web` is a Next.js App Router app in TypeScript. Unit tests use Vitest with jsdom and Testing Library, in `*_tests.tsx` files next to the code (see Tests below). Vitest globals are off, so call `cleanup` in `afterEach` when rendering components. It is an npm workspace, so install its dependencies from the root. Use `typescript` 7.x, the same version in both web apps. Keep `@types/node` on 24 to match the Node pin.
 - `apps/super-be` is a FastAPI app in Python 3.13+, managed with uv. Its package is `super_be/`, and its tests sit next to the source as `*_tests.py` (see Tests below). Ruff and pyright are configured in `pyproject.toml`. Run `uv run ruff format .` to fix formatting. Commit `uv.lock`.
+- `api.http` at the repo root holds manual HTTP requests for the running backend and web app. It uses the kulala.nvim format, with the host in a variable at the top. Keep it in sync when endpoints change. It is not a test, so it does not replace `*_tests.*` files.
 - `apps/super-web-e2e` has Playwright tests in `tests/`. The Playwright config builds and starts `super-web` on port 3000 if it isn't already running, waits for `/api/health` to return, and then runs the tests against the production build.
 
 ## Tests
