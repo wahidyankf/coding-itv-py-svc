@@ -84,3 +84,7 @@ libs/                shared code for future use (empty for now)
 - The pre-push hook runs `test:quick` on the projects changed since `main`.
 
 The file [`AGENTS.md`](AGENTS.md) has more detail for AI coding agents and for the repo's full rules.
+
+## Contributing
+
+External contributions are currently closed.
